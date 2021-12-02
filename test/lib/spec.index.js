@@ -8,60 +8,59 @@ chai.use(require('sinon-chai'));
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 const CountriesCachedModel = require('../../lib');
-const HmpoCachedModel = require('hmpo-cached-model');
 
-let unitedKingdom = {
+const unitedKingdom = {
     countryCode: 'GB',
     countryNameSlug: 'united-kingdom',
     addressCountryFlag: true,
     countryOfBirthFlag: true,
     displayName: 'United Kingdom',
+    displayNameWelsh: 'Welsh United Kingdom',
     channel: 'ONLINE',
     contentType: 1,
     status: 'ACTIVE'
 };
-let foo = {
+const foo = {
     countryCode: 'FO',
     countryNameSlug: 'foo',
     addressCountryFlag: true,
     countryOfBirthFlag: false,
     displayName: 'Foo',
+    displayNameWelsh: 'Welsh Foo',
     channel: 'ONLINE',
     contentType: 2,
     status: 'INACTIVE'
 };
-let bar = {
+const bar = {
     countryCode: 'BA',
     countryNameSlug: 'bar',
     addressCountryFlag: false,
     countryOfBirthFlag: true,
     displayName: 'Bar',
+    displayNameWelsh: 'Welsh Bar',
     channel: 'NA',
     contentType: 7,
     status: 'INACTIVE'
 };
-let narnia = {
+const narnia = {
     countryCode: 'NA',
     countryNameSlug: 'narnia',
     addressCountryFlag: null,
     countryOfBirthFlag: null,
     displayName: 'Narnia',
+    displayNameWelsh: 'Welsh Narnia',
     channel: 'ONLINE',
     contentType: 7,
     status: 'INACTIVE'
 };
 
-let countries = [unitedKingdom, foo, bar, narnia];
+const countries = [foo, unitedKingdom, bar, narnia];
 
 describe('CountriesCachedModel', () => {
     let clock, instance, options, stubs;
 
     beforeEach(() => {
         clock = sinon.useFakeTimers(1234567890000);
-        sinon.stub(HmpoCachedModel.prototype, 'start');
-        sinon.stub(HmpoCachedModel.prototype, 'stop');
-        sinon.stub(HmpoCachedModel.prototype, 'on');
-        sinon.stub(HmpoCachedModel.prototype, 'get');
 
         stubs = {
             storeFactory: {
@@ -74,6 +73,10 @@ describe('CountriesCachedModel', () => {
             HmpoCachedModel: sinon.stub(),
             MutedCachedModel: sinon.stub(),
             countryCache: {
+                logger: {
+                    outbound: sinon.stub(),
+                    trimHtml: sinon.stub().returnsArg(0)
+                },
                 start: sinon.stub(),
                 stop: sinon.stub(),
                 on: sinon.stub(),
@@ -102,10 +105,6 @@ describe('CountriesCachedModel', () => {
     });
 
     afterEach(() => {
-        HmpoCachedModel.prototype.start.restore();
-        HmpoCachedModel.prototype.stop.restore();
-        HmpoCachedModel.prototype.on.restore();
-        HmpoCachedModel.prototype.get.restore();
         clock.restore();
     });
 
@@ -139,9 +138,11 @@ describe('CountriesCachedModel', () => {
             stubs.HmpoCachedModel.should.have.been.called;
         });
 
-        it('should attach indexers to cache change events', () => {
-            stubs.countryCache.on.should.have.been.calledOnce;
+        it('should attach loggers to failures, and indexers to cache change events', () => {
+            stubs.countryCache.on.should.have.been.calledThrice;
             stubs.countryCache.on.should.have.been.calledWithExactly('change', sinon.match.func);
+            stubs.countryCache.on.should.have.been.calledWithExactly('fail', sinon.match.func);
+            stubs.countryCache.on.should.have.been.calledWithExactly('error', sinon.match.func);
         });
     });
 
@@ -346,6 +347,7 @@ describe('CountriesCachedModel', () => {
                     countryNameSlug: 'united-kingdom',
                     countryOfBirthFlag: true,
                     displayName: 'United Kingdom',
+                    displayNameWelsh: 'Welsh United Kingdom',
                     status: 'ACTIVE',
                     channel: 'ONLINE',
                     contentType: 1
@@ -371,6 +373,7 @@ describe('CountriesCachedModel', () => {
                 countryCode: 'GB',
                 countryNameSlug: 'united-kingdom',
                 displayName: 'United Kingdom',
+                displayNameWelsh: 'Welsh United Kingdom',
                 countryOfBirthFlag: true,
                 channel: 'ONLINE',
                 status: 'ACTIVE',
@@ -457,7 +460,7 @@ describe('CountriesCachedModel', () => {
         it('should set _residenceCountries to all countries where addressCountryFlag is true', () => {
             instance._indexCountries();
             instance._residenceCountries.should.deep.equal([
-                unitedKingdom, foo
+                foo, unitedKingdom
             ]);
         });
 
@@ -510,6 +513,163 @@ describe('CountriesCachedModel', () => {
                 'Bar': bar,
                 'Narnia': narnia
             });
+        });
+    });
+
+    describe('dropdownList', () => {
+        it('turns a list of countries into sorted drop down select box options with GB at the top', () => {
+            const items = instance.dropdownList(countries, false);
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
+                { value: 'BA', text: 'Bar', label: 'Bar' },
+                { value: 'FO', text: 'Foo', label: 'Foo' },
+                { value: 'NA', text: 'Narnia', label: 'Narnia' }
+            ]);
+        });
+
+        it('turns a list of countries into sorted drop down select box options with GB at the top using Welsh displayNames', () => {
+            const items = instance.dropdownList(countries, true);
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'Welsh United Kingdom', label: 'Welsh United Kingdom' },
+                { value: 'BA', text: 'Welsh Bar', label: 'Welsh Bar' },
+                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' },
+                { value: 'NA', text: 'Welsh Narnia', label: 'Welsh Narnia' }
+            ]);
+        });
+    });
+
+    describe('dropdownListBirthCountries', () => {
+        it('turns a list of countries into drop down select box options', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListBirthCountries();
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
+                { value: 'BA', text: 'Bar', label: 'Bar' }
+            ]);
+        });
+
+        it('turns a list of countries into drop down select box options in welsh', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListBirthCountries(true);
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'Welsh United Kingdom', label: 'Welsh United Kingdom' },
+                { value: 'BA', text: 'Welsh Bar', label: 'Welsh Bar' }
+            ]);
+        });
+    });
+
+    describe('dropdownListOverseasBirthCountries', () => {
+        it('turns a list of countries into drop down select box options', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListOverseasBirthCountries();
+
+            items.should.deep.equal([
+                { value: 'BA', text: 'Bar', label: 'Bar' }
+            ]);
+        });
+
+        it('turns a list of countries into drop down select box options in welsh', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListOverseasBirthCountries(true);
+
+            items.should.deep.equal([
+                { value: 'BA', text: 'Welsh Bar', label: 'Welsh Bar' }
+            ]);
+        });
+    });
+
+    describe('dropdownListResidenceCountries', () => {
+        it('turns a list of countries into drop down select box options', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListResidenceCountries();
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
+                { value: 'FO', text: 'Foo', label: 'Foo' }
+            ]);
+        });
+
+        it('turns a list of countries into drop down select box options in welsh', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListResidenceCountries(true);
+
+            items.should.deep.equal([
+                { value: 'GB', text: 'Welsh United Kingdom', label: 'Welsh United Kingdom' },
+                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' }
+            ]);
+        });
+    });
+
+    describe('dropdownListOverseasResidenceCountries', () => {
+        it('turns a list of countries into drop down select box options', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListOverseasResidenceCountries();
+
+            items.should.deep.equal([
+                { value: 'FO', text: 'Foo', label: 'Foo' }
+            ]);
+        });
+
+        it('turns a list of countries into drop down select box options in welsh', () => {
+            instance._indexCountries();
+            const items = instance.dropdownListOverseasResidenceCountries(true);
+
+            items.should.deep.equal([
+                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' }
+            ]);
+        });
+    });
+
+    describe('onFail logger', () => {
+        let settings;
+
+        beforeEach(() => {
+            settings = {
+                method: 'GET',
+                url: 'http://example.com/test/path'
+            };
+        });
+
+        it('should log the returned error message', () => {
+            const err = new Error('test');
+            err.body = '<body><tag>error text</tag></body>';
+            instance.onFail(err, {}, settings, 123, 1234567);
+            stubs.countryCache.logger.outbound.should.have.been.calledWithExactly(
+                'Countries CachedModel request failed :outVerb :outRequest :outResponseCode :outError',
+                {
+                    outVerb: 'GET',
+                    outRequest: 'http://example.com/test/path',
+                    outResponseCode: 123,
+                    outResponseTime: 1234567,
+                    outError: 'test',
+                    outErrorBody: '<body><tag>error text</tag></body>'
+                }
+            );
+        });
+
+        it('should log the data error message', () => {
+            instance.onFail({}, { error: 'test' }, settings, 123, 1234567);
+            stubs.countryCache.logger.outbound.args[0][1].outError.should.equal('test');
+        });
+
+        it('should log an empty string if no error is available', () => {
+            instance.onFail({}, {}, settings, 123, 1234567);
+            stubs.countryCache.logger.outbound.args[0][1].outError.should.equal('');
+        });
+    });
+
+    describe('onError logger', () => {
+        it('should log the returned error message', () => {
+            let err = new Error('test');
+            instance.onError(err);
+            stubs.countryCache.logger.outbound.should.have.been.calledWithExactly(
+                'Countries CachedModel request error :err.message',
+                err
+            );
         });
     });
 });
