@@ -73,20 +73,22 @@ describe('CountriesCachedModel', () => {
             HmpoCachedModel: sinon.stub(),
             MutedCachedModel: sinon.stub(),
             countryCache: {
-                logger: {
-                    outbound: sinon.stub(),
-                    trimHtml: sinon.stub().returnsArg(0)
-                },
+                getLogger: sinon.stub(),
                 start: sinon.stub(),
                 stop: sinon.stub(),
                 on: sinon.stub(),
                 get: sinon.stub().returns(countries)
-            }
+            },
+            logger: {
+                outbound: sinon.stub(),
+                trimHtml: sinon.stub().returnsArg(0)
+            },
         };
 
         stubs.storeFactory.getClient.returns(stubs.store);
         stubs.HmpoCachedModel.returns(stubs.countryCache);
         stubs.MutedCachedModel.returns(stubs.countryCache);
+        stubs.countryCache.getLogger.returns(stubs.logger);
 
         options = {
             countryUrl: 'http://example.com/countries',
@@ -638,7 +640,7 @@ describe('CountriesCachedModel', () => {
             const err = new Error('test');
             err.body = '<body><tag>error text</tag></body>';
             instance.onFail(err, {}, settings, 123, 1234567);
-            stubs.countryCache.logger.outbound.should.have.been.calledWithExactly(
+            stubs.logger.outbound.should.have.been.calledWithExactly(
                 'Countries CachedModel request failed :outVerb :outRequest :outResponseCode :outError',
                 {
                     outVerb: 'GET',
@@ -653,12 +655,12 @@ describe('CountriesCachedModel', () => {
 
         it('should log the data error message', () => {
             instance.onFail({}, { error: 'test' }, settings, 123, 1234567);
-            stubs.countryCache.logger.outbound.args[0][1].outError.should.equal('test');
+            stubs.logger.outbound.args[0][1].outError.should.equal('test');
         });
 
         it('should log an empty string if no error is available', () => {
             instance.onFail({}, {}, settings, 123, 1234567);
-            stubs.countryCache.logger.outbound.args[0][1].outError.should.equal('');
+            stubs.logger.outbound.args[0][1].outError.should.equal('');
         });
     });
 
@@ -666,7 +668,7 @@ describe('CountriesCachedModel', () => {
         it('should log the returned error message', () => {
             let err = new Error('test');
             instance.onError(err);
-            stubs.countryCache.logger.outbound.should.have.been.calledWithExactly(
+            stubs.logger.outbound.should.have.been.calledWithExactly(
                 'Countries CachedModel request error :err.message',
                 err
             );
