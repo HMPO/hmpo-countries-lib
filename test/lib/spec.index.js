@@ -18,7 +18,7 @@ const unitedKingdom = {
     displayNameWelsh: 'Welsh United Kingdom',
     channel: 'ONLINE',
     contentType: 1,
-    status: 'ACTIVE'
+    status: 'ACTIVE',
 };
 const foo = {
     countryCode: 'FO',
@@ -29,7 +29,10 @@ const foo = {
     displayNameWelsh: 'Welsh Foo',
     channel: 'ONLINE',
     contentType: 2,
-    status: 'INACTIVE'
+    status: 'INACTIVE',
+    applicationProcessing: {
+        stopNewApplications: false
+    }
 };
 const bar = {
     countryCode: 'BA',
@@ -40,7 +43,10 @@ const bar = {
     displayNameWelsh: 'Welsh Bar',
     channel: 'NA',
     contentType: 7,
-    status: 'INACTIVE'
+    status: 'INACTIVE',
+    applicationProcessing: {
+        stopNewApplications: true
+    }
 };
 const narnia = {
     countryCode: 'NA',
@@ -410,6 +416,26 @@ describe('CountriesCachedModel', () => {
         });
     });
 
+    describe('areNewApplicationsStoppedForId', () => {
+        it('should be a function', () => {
+            instance.areNewApplicationsStoppedForId.should.be.a('function');
+        });
+
+        it('should return true for a country that is has applications stopped', () => {
+            instance._indexCountries();
+            instance.areNewApplicationsStoppedForId('BA').should.equal(true);
+        });
+
+        it('should return false for a country that does not have applications stopped', () => {
+            instance._indexCountries();
+            instance.areNewApplicationsStoppedForId('FO').should.equal(false);
+        });
+
+        it('should return undefined if country is not found', () => {
+            instance._indexCountries();
+            expect(instance.areNewApplicationsStoppedForId('??')).to.equal(undefined);
+        });
+    });
     describe('isActiveById', () => {
         it('should be a function', () => {
             instance.isActiveById.should.be.a('function');
