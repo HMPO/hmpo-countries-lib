@@ -29,7 +29,10 @@ const foo = {
     displayNameWelsh: 'Welsh Foo',
     channel: 'ONLINE',
     contentType: 2,
-    status: 'INACTIVE'
+    status: 'INACTIVE',
+    applicationProcessing: {
+        stopNewApplications: false
+    }
 };
 const bar = {
     countryCode: 'BA',
@@ -40,7 +43,10 @@ const bar = {
     displayNameWelsh: 'Welsh Bar',
     channel: 'NA',
     contentType: 7,
-    status: 'INACTIVE'
+    status: 'INACTIVE',
+    applicationProcessing: {
+        stopNewApplications: true
+    }
 };
 const narnia = {
     countryCode: 'NA',
@@ -136,7 +142,7 @@ describe('CountriesCachedModel', () => {
 
         it('should use a non muted cached model if verbose option is set', () => {
             stubs.HmpoCachedModel.resetHistory();
-            instance = new stubs.CountriesCachedModel({verbose: true});
+            instance = new stubs.CountriesCachedModel({ verbose: true });
             stubs.HmpoCachedModel.should.have.been.called;
         });
 
@@ -199,10 +205,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _overseasCountries array', () => {
             instance._overseasCountries = [
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ];
             instance.getOverseasCountries().should.deep.equal([
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -214,10 +220,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _residenceCountries array', () => {
             instance._residenceCountries = [
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ];
             instance.getResidenceCountries().should.deep.equal([
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -229,10 +235,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _overseasResidenceCountries array', () => {
             instance._overseasResidenceCountries = [
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ];
             instance.getOverseasResidenceCountries().should.deep.equal([
-                {countryCode: 'FO', countryNameSlug: 'foo'}
+                { countryCode: 'FO', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -244,10 +250,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _overseasBirthCountries array', () => {
             instance._overseasBirthCountries = [
-                {countryCode: 'BA', countryNameSlug: 'bar'}
+                { countryCode: 'BA', countryNameSlug: 'bar' }
             ];
             instance.getOverseasBirthCountries().should.deep.equal([
-                {countryCode: 'BA', countryNameSlug: 'bar'}
+                { countryCode: 'BA', countryNameSlug: 'bar' }
             ]);
         });
     });
@@ -259,10 +265,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _birthCountries array', () => {
             instance._birthCountries = [
-                {countryCode: 'BA', countryNameSlug: 'bar'}
+                { countryCode: 'BA', countryNameSlug: 'bar' }
             ];
             instance.getBirthCountries().should.deep.equal([
-                {countryCode: 'BA', countryNameSlug: 'bar'}
+                { countryCode: 'BA', countryNameSlug: 'bar' }
             ]);
         });
     });
@@ -407,6 +413,27 @@ describe('CountriesCachedModel', () => {
         it('should return undefined if country is not found', () => {
             instance._indexCountries();
             expect(instance.isRestrictedById('??')).to.equal(undefined);
+        });
+    });
+
+    describe('areNewApplicationsStoppedForId', () => {
+        it('should be a function', () => {
+            instance.areNewApplicationsStoppedForId.should.be.a('function');
+        });
+
+        it('should return true for a country that is has applications stopped', () => {
+            instance._indexCountries();
+            instance.areNewApplicationsStoppedForId('BA').should.equal(true);
+        });
+
+        it('should return false for a country that does not have applications stopped', () => {
+            instance._indexCountries();
+            instance.areNewApplicationsStoppedForId('FO').should.equal(false);
+        });
+
+        it('should return undefined if country is not found', () => {
+            instance._indexCountries();
+            expect(instance.areNewApplicationsStoppedForId('??')).to.equal(undefined);
         });
     });
 
