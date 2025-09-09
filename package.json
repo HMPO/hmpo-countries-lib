@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/UKHomeOffice/passports-countries-lib",
   "dependencies": {
-    "debug": "^4.3.7",
-    "hmpo-cached-model": "^6.0.0",
+    "debug": "4.3.7",
+    "hmpo-cached-model": "^6.0.1",
     "underscore": "^1.13.7"
   },
   "devDependencies": {
