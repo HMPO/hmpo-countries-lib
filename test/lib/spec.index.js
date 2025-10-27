@@ -228,6 +228,24 @@ describe('CountriesCachedModel', () => {
         });
     });
 
+    describe('getResidenceCountriesForContact', () => {
+        it('should be a function', () => {
+            instance.getResidenceCountriesForContact.should.be.a('function');
+        });
+
+        it('should return the value of the _residenceCountries array, filtering out non-permitted values', () => {
+            instance._residenceCountries = [
+                { countryCode: 'FO', countryNameSlug: 'foo' },
+                { countryCode: 'PJ', countryNameSlug: 'palestine-west-bank' },
+                { countryCode: 'PZ', countryNameSlug: 'palestine-gaza' },
+            ];
+            instance.getResidenceCountriesForContact().should.deep.equal([
+                { countryCode: 'FO', countryNameSlug: 'foo' }
+            ]);
+        });
+    });
+
+
     describe('getOverseasResidenceCountries', () => {
         it('should be a function', () => {
             instance.getOverseasResidenceCountries.should.be.a('function');
@@ -566,6 +584,20 @@ describe('CountriesCachedModel', () => {
                 { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' },
                 { value: 'NA', text: 'Welsh Narnia', label: 'Welsh Narnia' }
             ]);
+        });
+    });
+
+    describe('sortCountryList', () => {
+        it('turns a list of countries into sorted list with GB at the top', () => {
+            const items = instance.sortCountryList(countries, true);
+
+            items.should.deep.equal([unitedKingdom, bar, foo, narnia]);
+        });
+
+        it('turns a list of countries into sorted list', () => {
+            const items = instance.sortCountryList(countries, false);
+
+            items.should.deep.equal([bar, foo, narnia, unitedKingdom]);
         });
     });
 

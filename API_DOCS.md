@@ -17,57 +17,59 @@
     *   [Examples][13]
 *   [getResidenceCountries][14]
     *   [Examples][15]
-*   [getOverseasResidenceCountries][16]
+*   [getResidenceCountriesForContact][16]
     *   [Examples][17]
-*   [getOverseasBirthCountries][18]
+*   [getOverseasResidenceCountries][18]
     *   [Examples][19]
-*   [getCountryById][20]
-    *   [Parameters][21]
-    *   [Examples][22]
-*   [getCountryBySlug][23]
-    *   [Parameters][24]
-    *   [Examples][25]
-*   [getCountryByDisplayName][26]
-    *   [Parameters][27]
-    *   [Examples][28]
-*   [getCountryDataById][29]
-    *   [Parameters][30]
-    *   [Examples][31]
-*   [getCountryDataBySlug][32]
-    *   [Parameters][33]
-    *   [Examples][34]
-*   [isRestrictedById][35]
-    *   [Parameters][36]
-    *   [Examples][37]
-*   [areNewApplicationsStoppedForId][38]
-    *   [Parameters][39]
-    *   [Examples][40]
-*   [isActiveById][41]
-    *   [Parameters][42]
-    *   [Examples][43]
-*   [getSlugById][44]
-    *   [Parameters][45]
-    *   [Examples][46]
-*   [sortCountryList][47]
-    *   [Parameters][48]
-    *   [Examples][49]
-*   [dropdownList][50]
-    *   [Parameters][51]
-    *   [Examples][52]
-*   [dropdownListBirthCountries][53]
-    *   [Parameters][54]
-*   [dropdownListOverseasBirthCountries][55]
+*   [getOverseasBirthCountries][20]
+    *   [Examples][21]
+*   [getCountryById][22]
+    *   [Parameters][23]
+    *   [Examples][24]
+*   [getCountryBySlug][25]
+    *   [Parameters][26]
+    *   [Examples][27]
+*   [getCountryByDisplayName][28]
+    *   [Parameters][29]
+    *   [Examples][30]
+*   [getCountryDataById][31]
+    *   [Parameters][32]
+    *   [Examples][33]
+*   [getCountryDataBySlug][34]
+    *   [Parameters][35]
+    *   [Examples][36]
+*   [isRestrictedById][37]
+    *   [Parameters][38]
+    *   [Examples][39]
+*   [areNewApplicationsStoppedForId][40]
+    *   [Parameters][41]
+    *   [Examples][42]
+*   [isActiveById][43]
+    *   [Parameters][44]
+    *   [Examples][45]
+*   [getSlugById][46]
+    *   [Parameters][47]
+    *   [Examples][48]
+*   [sortCountryList][49]
+    *   [Parameters][50]
+    *   [Examples][51]
+*   [dropdownList][52]
+    *   [Parameters][53]
+    *   [Examples][54]
+*   [dropdownListBirthCountries][55]
     *   [Parameters][56]
-*   [dropdownListResidenceCountries][57]
+*   [dropdownListOverseasBirthCountries][57]
     *   [Parameters][58]
-*   [dropdownListOverseasResidenceCountries][59]
+*   [dropdownListResidenceCountries][59]
     *   [Parameters][60]
-*   [onFail][61]
+*   [dropdownListOverseasResidenceCountries][61]
     *   [Parameters][62]
-    *   [Examples][63]
-*   [onError][64]
-    *   [Parameters][65]
-    *   [Examples][66]
+*   [onFail][63]
+    *   [Parameters][64]
+    *   [Examples][65]
+*   [onError][66]
+    *   [Parameters][67]
+    *   [Examples][68]
 
 ## constructor
 
@@ -78,14 +80,14 @@ for country data, and binds event listeners for handling changes and errors.
 
 ### Parameters
 
-*   `options` **[Object][67]** Configuration options for the model. (optional, default `{}`)
+*   `options` **[Object][69]** Configuration options for the model. (optional, default `{}`)
 
-    *   `options.key` **[string][68]** A unique key used for storage identification. (optional, default `'countrieslib'`)
-    *   `options.countryUrl` **[string][68]** The URL endpoint to fetch country data from.
-    *   `options.store` **[Object][67]** The storage mechanism used for caching (e.g., localStorage).
-    *   `options.countryInterval` **[number][69]** Polling interval for API data refresh in milliseconds.
-    *   `options.storeInterval` **[number][69]** Polling interval for store data refresh in milliseconds.
-    *   `options.verbose` **[boolean][70]** Determines whether to use a verbose model (HmpoCachedModel) or a muted one (MutedCachedModel). (optional, default `false`)
+    *   `options.key` **[string][70]** A unique key used for storage identification. (optional, default `'countrieslib'`)
+    *   `options.countryUrl` **[string][70]** The URL endpoint to fetch country data from.
+    *   `options.store` **[Object][69]** The storage mechanism used for caching (e.g., localStorage).
+    *   `options.countryInterval` **[number][71]** Polling interval for API data refresh in milliseconds.
+    *   `options.storeInterval` **[number][71]** Polling interval for store data refresh in milliseconds.
+    *   `options.verbose` **[boolean][72]** Determines whether to use a verbose model (HmpoCachedModel) or a muted one (MutedCachedModel). (optional, default `false`)
 
 ## on
 
@@ -93,8 +95,8 @@ Subscribes a handler function to a specific event on the internal country cache.
 
 ### Parameters
 
-*   `event` **[string][68]** The name of the event to listen for (e.g., 'change', 'fail', 'error').
-*   `handler` **[Function][71]** The callback function to execute when the event is triggered.
+*   `event` **[string][70]** The name of the event to listen for (e.g., 'change', 'fail', 'error').
+*   `handler` **[Function][73]** The callback function to execute when the event is triggered.
 
 ### Examples
 
@@ -120,7 +122,7 @@ Retrieve the list of all Countries.
 let allCountries = countriesLib.getAllCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of all Countries.
+Returns **[Array][74]<[Object][69]>** The list of all Countries.
 
 ## getOverseasCountries
 
@@ -132,7 +134,7 @@ Retrieve the list of all Overseas Countries.
 let ovsCountries = countriesLib.getOverseasCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of Overseas Countries.
+Returns **[Array][74]<[Object][69]>** The list of Overseas Countries.
 
 ## getBirthCountries
 
@@ -144,7 +146,7 @@ Retrieve the list of all Birth Countries.
 let birthCountries = countriesLib.getBirthCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of Birth Countries.
+Returns **[Array][74]<[Object][69]>** The list of Birth Countries.
 
 ## getResidenceCountries
 
@@ -156,7 +158,22 @@ Retrieve the list of all Residence Countries.
 let residenceCountries = countriesLib.getResidenceCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of Residence Countries.
+Returns **[Array][74]<[Object][69]>** The list of Residence Countries.
+
+## getResidenceCountriesForContact
+
+Retrieve the list of all Residence Countries that can be used for contact phone numbers.
+
+The addressCountryFlag as part of \_residenceCountries is used to denote both countries of application,
+as well as countries of address/contact. Therefore some countries will need to be excluded.
+
+### Examples
+
+```javascript
+let contactDetailsResidenceCountries = countriesLib.getResidenceCountriesForContact();
+```
+
+Returns **[Array][74]<[Object][69]>** The list of Residence Countries.
 
 ## getOverseasResidenceCountries
 
@@ -168,7 +185,7 @@ Retrieve the list of all Overseas Residence Countries.
 let ovsResidenceCountries = countriesLib.getOverseasResidenceCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of Overseas Residence Countries.
+Returns **[Array][74]<[Object][69]>** The list of Overseas Residence Countries.
 
 ## getOverseasBirthCountries
 
@@ -178,7 +195,7 @@ Returns **[Array][72]<[Object][67]>** The list of Overseas Residence Countries.
 let ovsBirthCountries = countriesLib.getOverseasBirthCountries();
 ```
 
-Returns **[Array][72]<[Object][67]>** The list of Overseas Birth Countries
+Returns **[Array][74]<[Object][69]>** The list of Overseas Birth Countries
 
 ## getCountryById
 
@@ -188,7 +205,7 @@ If the input code is `'UK'`, it is normalized to `'GB'` before lookup.
 
 ### Parameters
 
-*   `countryCode` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `countryCode` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -196,7 +213,7 @@ If the input code is `'UK'`, it is normalized to `'GB'` before lookup.
 let unitedKingdom = countriesLib.getCountryById('UK'); // return country object for United Kingdom
 ```
 
-Returns **[Object][67]?** The country object if found, otherwise, `null`.
+Returns **[Object][69]?** The country object if found, otherwise, `null`.
 
 ## getCountryBySlug
 
@@ -204,7 +221,7 @@ Retrieves a country object based on the provided slug (URL-friendly name).
 
 ### Parameters
 
-*   `countryNameSlug` **[string][68]** The slugified name of the country (e.g., "united-states").
+*   `countryNameSlug` **[string][70]** The slugified name of the country (e.g., "united-states").
 
 ### Examples
 
@@ -212,7 +229,7 @@ Retrieves a country object based on the provided slug (URL-friendly name).
 let spain = countriesLib.getCountryBySlug('spain'); // return country object for Spain
 ```
 
-Returns **[Object][67]?** The country object if found, otherwise, `null`.
+Returns **[Object][69]?** The country object if found, otherwise, `null`.
 
 ## getCountryByDisplayName
 
@@ -220,7 +237,7 @@ Retrieves a country object based on the provided display name.
 
 ### Parameters
 
-*   `countryDisplayName` **[string][68]** The display name of the country.
+*   `countryDisplayName` **[string][70]** The display name of the country.
 
 ### Examples
 
@@ -228,7 +245,7 @@ Retrieves a country object based on the provided display name.
 let franceData = countriesLib.getCountryByDisplayName('France'); // return country object for France.
 ```
 
-Returns **[Object][67]?** The country object if found, otherwise, `null`.
+Returns **[Object][69]?** The country object if found, otherwise, `null`.
 
 ## getCountryDataById
 
@@ -240,7 +257,7 @@ If the input code is `'UK'`, it is normalized to `'GB'` before lookup.
 
 ### Parameters
 
-*   `countryCode` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `countryCode` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -248,7 +265,7 @@ If the input code is `'UK'`, it is normalized to `'GB'` before lookup.
 let ukCountryData = countriesLib.getCountryDataById('GB'); // return country object for Great Britain
 ```
 
-Returns **[Object][67]?** The country object if found, otherwise, `null`.
+Returns **[Object][69]?** The country object if found, otherwise, `null`.
 
 ## getCountryDataBySlug
 
@@ -258,7 +275,7 @@ Calls getCountryBySlug(countryNameSlug) directly.
 
 ### Parameters
 
-*   `countryNameSlug` **[string][68]** The slugified name of the country (e.g., "united-states").
+*   `countryNameSlug` **[string][70]** The slugified name of the country (e.g., "united-states").
 
 ### Examples
 
@@ -266,7 +283,7 @@ Calls getCountryBySlug(countryNameSlug) directly.
 let countryDataForUS = countriesLib.getCountryDataBySlug('united-states'); // return country object for the United States
 ```
 
-Returns **[Object][67]?** The country object if found, otherwise, `null`.
+Returns **[Object][69]?** The country object if found, otherwise, `null`.
 
 ## isRestrictedById
 
@@ -274,7 +291,7 @@ Checks if a country is restricted using its country code.
 
 ### Parameters
 
-*   `id` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `id` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -282,7 +299,7 @@ Checks if a country is restricted using its country code.
 let isUKRestricted = countriesLib.isRestrictedById('UK'); // return `false`
 ```
 
-Returns **[boolean][70]** `true` if the country is restricted, otherwise, `false`.
+Returns **[boolean][72]** `true` if the country is restricted, otherwise, `false`.
 
 ## areNewApplicationsStoppedForId
 
@@ -290,7 +307,7 @@ Checks if the stopNewApplications flag by country code is enabled.
 
 ### Parameters
 
-*   `id` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `id` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -298,7 +315,7 @@ Checks if the stopNewApplications flag by country code is enabled.
 let areNewApplicationsStopped = countriesLib.areNewApplicationsStoppedForId('FR'); // return `false`
 ```
 
-Returns **[boolean][70]** `true` if the new applications are stopped for that country is restricted, otherwise, `false`.
+Returns **[boolean][72]** `true` if the new applications are stopped for that country is restricted, otherwise, `false`.
 
 ## isActiveById
 
@@ -306,7 +323,7 @@ Checks if a country is active using its country code.
 
 ### Parameters
 
-*   `id` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `id` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -314,7 +331,7 @@ Checks if a country is active using its country code.
 let isFranceActive = countriesLib.isActiveById('FR'); // return `true`
 ```
 
-Returns **[boolean][70]** `true` if the country status is 'ACTIVE', otherwise, `false`.
+Returns **[boolean][72]** `true` if the country status is 'ACTIVE', otherwise, `false`.
 
 ## getSlugById
 
@@ -322,7 +339,7 @@ Retrieve the country name slug using the provided country code.
 
 ### Parameters
 
-*   `countryCode` **[string][68]** The country code (e.g., 'US', 'UK', 'FR').
+*   `countryCode` **[string][70]** The country code (e.g., 'US', 'UK', 'FR').
 
 ### Examples
 
@@ -330,7 +347,7 @@ Retrieve the country name slug using the provided country code.
 let countryNameSlug = countriesLib.getSlugById('UK'); // return 'united-kingdom'
 ```
 
-Returns **([string][68] | [undefined][73])** The slug version of the country's name if found, otherwise `undefined`.
+Returns **([string][70] | [undefined][75])** The slug version of the country's name if found, otherwise `undefined`.
 
 ## sortCountryList
 
@@ -339,7 +356,7 @@ Moves the country with `countryCode` 'GB' (United Kingdom) to the top of the lis
 
 ### Parameters
 
-*   `list` **[Array][72]<[Object][67]>** The array of country objects to sort.
+*   `list` **[Array][74]<[Object][69]>** The array of country objects to sort.
     Each object should have at least `displayName` and `countryCode` properties.
 
 ### Examples
@@ -360,7 +377,7 @@ const sorted = sortCountryList(countries);
 // ]
 ```
 
-Returns **[Array][72]<[Object][67]>** The sorted list with 'GB' (if found) at the beginning.
+Returns **[Array][74]<[Object][69]>** The sorted list with 'GB' (if found) at the beginning.
 
 ## dropdownList
 
@@ -369,9 +386,9 @@ Optionally uses Welsh display names based on the `isWelsh` flag.
 
 ### Parameters
 
-*   `list` **[Array][72]<[Object][67]>** The array of country objects to transform.
+*   `list` **[Array][74]<[Object][69]>** The array of country objects to transform.
     Each object should have `countryCode`, `displayName`, and `displayNameWelsh` properties.
-*   `isWelsh` **[boolean][70]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
 
 ### Examples
 
@@ -389,7 +406,7 @@ const dropdown = dropdownList(countries, false);
 // ]
 ```
 
-Returns **[Array][72]<[Object][67]>** An array of objects formatted for use in dropdowns,
+Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
 
 ## dropdownListBirthCountries
@@ -401,9 +418,9 @@ A wrapper function around `dropdownList(list, isWelsh)`.
 
 ### Parameters
 
-*   `isWelsh` **[boolean][70]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
 
-Returns **[Array][72]<[Object][67]>** An array of objects formatted for use in dropdowns,
+Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
 
 ## dropdownListOverseasBirthCountries
@@ -415,9 +432,9 @@ A wrapper function around `dropdownList(list, isWelsh)`.
 
 ### Parameters
 
-*   `isWelsh` **[boolean][70]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
 
-Returns **[Array][72]<[Object][67]>** An array of objects formatted for use in dropdowns,
+Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
 
 ## dropdownListResidenceCountries
@@ -429,9 +446,9 @@ A wrapper function around `dropdownList(list, isWelsh)`.
 
 ### Parameters
 
-*   `isWelsh` **[boolean][70]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
 
-Returns **[Array][72]<[Object][67]>** An array of objects formatted for use in dropdowns,
+Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
 
 ## dropdownListOverseasResidenceCountries
@@ -443,9 +460,9 @@ A wrapper function around `dropdownList(list, isWelsh)`.
 
 ### Parameters
 
-*   `isWelsh` **[boolean][70]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
 
-Returns **[Array][72]<[Object][67]>** An array of objects formatted for use in dropdowns,
+Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
 
 ## onFail
@@ -454,11 +471,11 @@ Handles failures from a country-related outbound request, logging relevant detai
 
 ### Parameters
 
-*   `err` **[Object][67]** The error object.
-*   `data` **[Object][67]** The response data, which may include an `error` message.
-*   `settings` **[Object][67]** The request settings.
-*   `statusCode` **[number][69]** The HTTP status code returned from the request.
-*   `responseTime` **[number][69]** The time taken for the request to complete, in milliseconds.
+*   `err` **[Object][69]** The error object.
+*   `data` **[Object][69]** The response data, which may include an `error` message.
+*   `settings` **[Object][69]** The request settings.
+*   `statusCode` **[number][71]** The HTTP status code returned from the request.
+*   `responseTime` **[number][71]** The time taken for the request to complete, in milliseconds.
 
 ### Examples
 
@@ -489,7 +506,7 @@ Logs the error using the outbound logger provided by the country cache.
 
 ### Parameters
 
-*   `err` **[Error][74]** The error object caught during the request.
+*   `err` **[Error][76]** The error object caught during the request.
 
 ### Examples
 
@@ -534,120 +551,124 @@ try {
 
 [15]: #examples-4
 
-[16]: #getoverseasresidencecountries
+[16]: #getresidencecountriesforcontact
 
 [17]: #examples-5
 
-[18]: #getoverseasbirthcountries
+[18]: #getoverseasresidencecountries
 
 [19]: #examples-6
 
-[20]: #getcountrybyid
+[20]: #getoverseasbirthcountries
 
-[21]: #parameters-2
+[21]: #examples-7
 
-[22]: #examples-7
+[22]: #getcountrybyid
 
-[23]: #getcountrybyslug
+[23]: #parameters-2
 
-[24]: #parameters-3
+[24]: #examples-8
 
-[25]: #examples-8
+[25]: #getcountrybyslug
 
-[26]: #getcountrybydisplayname
+[26]: #parameters-3
 
-[27]: #parameters-4
+[27]: #examples-9
 
-[28]: #examples-9
+[28]: #getcountrybydisplayname
 
-[29]: #getcountrydatabyid
+[29]: #parameters-4
 
-[30]: #parameters-5
+[30]: #examples-10
 
-[31]: #examples-10
+[31]: #getcountrydatabyid
 
-[32]: #getcountrydatabyslug
+[32]: #parameters-5
 
-[33]: #parameters-6
+[33]: #examples-11
 
-[34]: #examples-11
+[34]: #getcountrydatabyslug
 
-[35]: #isrestrictedbyid
+[35]: #parameters-6
 
-[36]: #parameters-7
+[36]: #examples-12
 
-[37]: #examples-12
+[37]: #isrestrictedbyid
 
-[38]: #arenewapplicationsstoppedforid
+[38]: #parameters-7
 
-[39]: #parameters-8
+[39]: #examples-13
 
-[40]: #examples-13
+[40]: #arenewapplicationsstoppedforid
 
-[41]: #isactivebyid
+[41]: #parameters-8
 
-[42]: #parameters-9
+[42]: #examples-14
 
-[43]: #examples-14
+[43]: #isactivebyid
 
-[44]: #getslugbyid
+[44]: #parameters-9
 
-[45]: #parameters-10
+[45]: #examples-15
 
-[46]: #examples-15
+[46]: #getslugbyid
 
-[47]: #sortcountrylist
+[47]: #parameters-10
 
-[48]: #parameters-11
+[48]: #examples-16
 
-[49]: #examples-16
+[49]: #sortcountrylist
 
-[50]: #dropdownlist
+[50]: #parameters-11
 
-[51]: #parameters-12
+[51]: #examples-17
 
-[52]: #examples-17
+[52]: #dropdownlist
 
-[53]: #dropdownlistbirthcountries
+[53]: #parameters-12
 
-[54]: #parameters-13
+[54]: #examples-18
 
-[55]: #dropdownlistoverseasbirthcountries
+[55]: #dropdownlistbirthcountries
 
-[56]: #parameters-14
+[56]: #parameters-13
 
-[57]: #dropdownlistresidencecountries
+[57]: #dropdownlistoverseasbirthcountries
 
-[58]: #parameters-15
+[58]: #parameters-14
 
-[59]: #dropdownlistoverseasresidencecountries
+[59]: #dropdownlistresidencecountries
 
-[60]: #parameters-16
+[60]: #parameters-15
 
-[61]: #onfail
+[61]: #dropdownlistoverseasresidencecountries
 
-[62]: #parameters-17
+[62]: #parameters-16
 
-[63]: #examples-18
+[63]: #onfail
 
-[64]: #onerror
+[64]: #parameters-17
 
-[65]: #parameters-18
+[65]: #examples-19
 
-[66]: #examples-19
+[66]: #onerror
 
-[67]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[67]: #parameters-18
 
-[68]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[68]: #examples-20
 
-[69]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[69]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[70]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[70]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[71]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[71]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[72]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[72]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[73]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[73]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[74]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[74]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[75]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[76]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
