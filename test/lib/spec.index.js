@@ -21,7 +21,7 @@ const unitedKingdom = {
     status: 'ACTIVE'
 };
 const foo = {
-    countryCode: 'FO',
+    countryCode: 'AA',
     countryNameSlug: 'foo',
     addressCountryFlag: true,
     countryOfBirthFlag: false,
@@ -205,10 +205,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _overseasCountries array', () => {
             instance._overseasCountries = [
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ];
             instance.getOverseasCountries().should.deep.equal([
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -220,10 +220,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _residenceCountries array', () => {
             instance._residenceCountries = [
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ];
             instance.getResidenceCountries().should.deep.equal([
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -235,12 +235,12 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _residenceCountries array, filtering out non-permitted values', () => {
             instance._residenceCountries = [
-                { countryCode: 'FO', countryNameSlug: 'foo' },
+                { countryCode: 'AA', countryNameSlug: 'foo' },
                 { countryCode: 'PJ', countryNameSlug: 'palestine-west-bank' },
                 { countryCode: 'PZ', countryNameSlug: 'palestine-gaza' },
             ];
             instance.getResidenceCountriesForContact().should.deep.equal([
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -253,10 +253,10 @@ describe('CountriesCachedModel', () => {
 
         it('should return the value of the _overseasResidenceCountries array', () => {
             instance._overseasResidenceCountries = [
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ];
             instance.getOverseasResidenceCountries().should.deep.equal([
-                { countryCode: 'FO', countryNameSlug: 'foo' }
+                { countryCode: 'AA', countryNameSlug: 'foo' }
             ]);
         });
     });
@@ -446,7 +446,7 @@ describe('CountriesCachedModel', () => {
 
         it('should return false for a country that does not have applications stopped', () => {
             instance._indexCountries();
-            instance.areNewApplicationsStoppedForId('FO').should.equal(false);
+            instance.areNewApplicationsStoppedForId('AA').should.equal(false);
         });
 
         it('should return undefined if country is not found', () => {
@@ -536,7 +536,7 @@ describe('CountriesCachedModel', () => {
             instance._indexCountries();
             instance._countriesById.should.deep.equal({
                 GB: unitedKingdom,
-                FO: foo,
+                AA: foo,
                 BA: bar,
                 NA: narnia
             });
@@ -570,7 +570,7 @@ describe('CountriesCachedModel', () => {
             items.should.deep.equal([
                 { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
                 { value: 'BA', text: 'Bar', label: 'Bar' },
-                { value: 'FO', text: 'Foo', label: 'Foo' },
+                { value: 'AA', text: 'Foo', label: 'Foo' },
                 { value: 'NA', text: 'Narnia', label: 'Narnia' }
             ]);
         });
@@ -581,7 +581,7 @@ describe('CountriesCachedModel', () => {
             items.should.deep.equal([
                 { value: 'GB', text: 'Welsh United Kingdom', label: 'Welsh United Kingdom' },
                 { value: 'BA', text: 'Welsh Bar', label: 'Welsh Bar' },
-                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' },
+                { value: 'AA', text: 'Welsh Foo', label: 'Welsh Foo' },
                 { value: 'NA', text: 'Welsh Narnia', label: 'Welsh Narnia' }
             ]);
         });
@@ -650,7 +650,7 @@ describe('CountriesCachedModel', () => {
 
             items.should.deep.equal([
                 { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
-                { value: 'FO', text: 'Foo', label: 'Foo' }
+                { value: 'AA', text: 'Foo', label: 'Foo' }
             ]);
         });
 
@@ -660,7 +660,7 @@ describe('CountriesCachedModel', () => {
 
             items.should.deep.equal([
                 { value: 'GB', text: 'Welsh United Kingdom', label: 'Welsh United Kingdom' },
-                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' }
+                { value: 'AA', text: 'Welsh Foo', label: 'Welsh Foo' }
             ]);
         });
     });
@@ -671,7 +671,7 @@ describe('CountriesCachedModel', () => {
             const items = instance.dropdownListOverseasResidenceCountries();
 
             items.should.deep.equal([
-                { value: 'FO', text: 'Foo', label: 'Foo' }
+                { value: 'AA', text: 'Foo', label: 'Foo' }
             ]);
         });
 
@@ -680,7 +680,7 @@ describe('CountriesCachedModel', () => {
             const items = instance.dropdownListOverseasResidenceCountries(true);
 
             items.should.deep.equal([
-                { value: 'FO', text: 'Welsh Foo', label: 'Welsh Foo' }
+                { value: 'AA', text: 'Welsh Foo', label: 'Welsh Foo' }
             ]);
         });
     });
