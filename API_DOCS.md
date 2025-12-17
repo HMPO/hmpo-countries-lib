@@ -352,12 +352,13 @@ Returns **([string][70] | [undefined][75])** The slug version of the country's n
 ## sortCountryList
 
 Sorts a list of country objects by their `displayName` property.
-Moves the country with `countryCode` 'GB' (United Kingdom) to the top of the list if present.
+Conditional to move the country with `countryCode` 'GB' (United Kingdom) to the top of the list if present.
+The GB move to top is optional as there are some instances where this is not required.
 
 ### Parameters
 
-*   `list` **[Array][74]<[Object][69]>** The array of country objects to sort.
-    Each object should have at least `displayName` and `countryCode` properties.
+*   `list` **[boolean][72]** Whether the GB country entry should move to top. Each object should have at least `displayName` and `countryCode` properties.
+*   `moveGbToTop`   (optional, default `true`)
 
 ### Examples
 
@@ -389,6 +390,7 @@ Optionally uses Welsh display names based on the `isWelsh` flag.
 *   `list` **[Array][74]<[Object][69]>** The array of country objects to transform.
     Each object should have `countryCode`, `displayName`, and `displayNameWelsh` properties.
 *   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `moveGbToTop`   (optional, default `true`)
 
 ### Examples
 
@@ -419,6 +421,7 @@ A wrapper function around `dropdownList(list, isWelsh)`.
 ### Parameters
 
 *   `isWelsh` **[boolean][72]** Whether to use the Welsh display name (`displayNameWelsh`) instead of the default (`displayName`).
+*   `moveGbToTop`   (optional, default `true`)
 
 Returns **[Array][74]<[Object][69]>** An array of objects formatted for use in dropdowns,
 each containing `value`, `text`, and `label` properties.
