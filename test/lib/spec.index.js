@@ -564,6 +564,17 @@ describe('CountriesCachedModel', () => {
     });
 
     describe('dropdownList', () => {
+        it('turns a list of countries into sorted drop down select box options', () => {
+            const items = instance.dropdownList(countries, false, false);
+
+            items.should.deep.equal([
+                { value: 'BA', text: 'Bar', label: 'Bar' },
+                { value: 'AA', text: 'Foo', label: 'Foo' },
+                { value: 'NA', text: 'Narnia', label: 'Narnia' },
+                { value: 'GB', text: 'United Kingdom', label: 'United Kingdom' },
+            ]);
+        });
+
         it('turns a list of countries into sorted drop down select box options with GB at the top', () => {
             const items = instance.dropdownList(countries, false);
 
@@ -590,6 +601,12 @@ describe('CountriesCachedModel', () => {
     describe('sortCountryList', () => {
         it('turns a list of countries into sorted list with GB at the top', () => {
             const items = instance.sortCountryList(countries, true);
+
+            items.should.deep.equal([unitedKingdom, bar, foo, narnia]);
+        });
+
+        it('turns a list of countries into sorted list with GB at the top by default when flag not provided', () => {
+            const items = instance.sortCountryList(countries);
 
             items.should.deep.equal([unitedKingdom, bar, foo, narnia]);
         });
